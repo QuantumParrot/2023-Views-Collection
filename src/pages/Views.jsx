@@ -1,14 +1,24 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import Aos from "aos";
+import "aos/dist/aos.css";
+
+function Loading() {
+    return (
+        <div className="alert border rounded-2 mt-2">
+        資料讀取中，請稍候⋯⋯ {'ε≡ﾍ( ´∀`)ﾉ'}
+        </div>
+    )
+}
+
 const { VITE_APP_SITE } = import.meta.env;
 
-function Views({nav, setNav}) {
+function Views() {
 
-    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
     const [token, setToken] = useState('');
 
@@ -19,6 +29,8 @@ function Views({nav, setNav}) {
     const [collects, setCollects] = useState([]);
 
     useEffect(()=>{ 
+
+        Aos.init();
 
         const token = document.cookie
         .split('; ').find((row)=>row.startsWith('token='))
@@ -31,18 +43,16 @@ function Views({nav, setNav}) {
     
     },[])
 
-    useEffect(()=>{
-        getData();
-        getCollects();
-    },[nav])
-
     const getData = async() => {
         try {
+            setIsLoading(true);
             const res = await axios.get(`${VITE_APP_SITE}/views`);
             // console.log(res);
             setViewsData(res.data);
-        } catch(error) {
-            console.log(error);
+            setIsLoading(false);
+        } catch(err) {
+            console.log(err);
+            setIsLoading(false);
         }
     }
 
@@ -101,10 +111,11 @@ function Views({nav, setNav}) {
 
     return (<>
     <h2 className="fw-bolder">景點一覽</h2>
+        {isLoading ? (<Loading />) : (
         <div className="row">
             {viewsData.map((view)=>{
                 return (
-                <div key={view.id} className="col-md-6 g-3">
+                <div key={view.id} className="col-md-6 g-3" data-aos="zoom-in" data-aos-duration="500">
                     <div className="card h-100">
                         <div className="card-header">＃{view.id}</div>
                         <div className="card-body d-flex flex-column justify-content-between">
@@ -132,6 +143,7 @@ function Views({nav, setNav}) {
                 )
             })}
         </div>
+        )}
     </>)
 }
 

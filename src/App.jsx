@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Route, Routes, NavLink, useNavigate, Link } from "react-router-dom";
+import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
 import './css/all.scss';
 
 import Swal from "sweetalert2";

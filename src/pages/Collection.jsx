@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 function Empty() {
     return (
         <div className="alert border rounded-2 mt-2">
-        尚未收藏任何景點，前往<NavLink to="/views">景點一覽</NavLink>查看
+        尚未收藏任何景點，前往<NavLink to="/views">景點一覽</NavLink>查看 {'┏( .-. ┏ ) ┓'}
         </div>
     )
 }
