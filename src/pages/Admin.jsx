@@ -41,7 +41,7 @@ function Admin() {
         }
     }
 
-    const handleDelete = async(id, name) => {
+    const handleDelete = (id, name) => {
         try {
             Swal.fire({
                 icon: 'warning',
@@ -53,7 +53,7 @@ function Admin() {
                 if (result.isConfirmed) {
                     axios.delete(`${VITE_APP_SITE}/views/${id}`)
                     .then((res)=>{
-                        // console.log(res);
+                        console.log(res);
                         getData();
                         Swal.fire({
                             icon: 'success',
